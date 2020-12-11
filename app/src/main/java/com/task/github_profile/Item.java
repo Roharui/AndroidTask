@@ -12,7 +12,7 @@ public class Item {
         return this.title;
     }
     String getDescription() {
-        return this.title;
+        return this.description;
     }
 
     Item(int image, String title, String description) {
