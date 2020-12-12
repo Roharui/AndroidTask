@@ -5,13 +5,12 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
 import com.task.github_profile.Data.Item;
+import com.task.github_profile.Data.Logo;
 import com.task.github_profile.Data.User;
 import com.task.github_profile.databinding.ActivityMainBinding;
 
@@ -52,27 +51,6 @@ public class RequestManager {
         }
     };
 
-//    private void placeItem(){
-//        RecyclerView recyclerView = (RecyclerView) binding.recyclerview;
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        List<Item> items = new ArrayList<>();
-//        Item[] item = new Item[ITEM_SIZE];
-//        item[0] = new Item(R.drawable.a, "#1", "test1");
-////        item[1] = new Item(R.drawable.b, "#2", "test2");
-////        item[2] = new Item(R.drawable.c, "#3", "test3");
-////        item[3] = new Item(R.drawable.d, "#4", "test4");
-////        item[4] = new Item(R.drawable.e, "#5", "test5");
-//
-//        for (int i = 0; i < ITEM_SIZE; i++) {
-//            items.add(item[i]);
-//        }
-//
-//        recyclerView.setAdapter(new ListView(getApplicationContext(), items, R.layout.activity_main));
-//    }
-
     public Response.Listener<String> repoRequest = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
@@ -87,12 +65,18 @@ public class RequestManager {
                 JSONArray arr = new JSONArray(response);
 
                 for(int i=0; i < arr.length(); i++){
-                    Item item = new Item(arr.getJSONObject(i));
-                    item.setImage(R.drawable.a);
+                    JSONObject json = arr.getJSONObject(i);
+                    Item item = new Item(json);
+
+                    Integer img = Logo.getLogo(json.getString("language"));
+                    item.setImage(img.intValue());
+
                     lst.add(item);
                 }
 
-            } catch (JSONException e){}
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
 
             recyclerView.setAdapter(new ListView(main.getApplicationContext(), lst, R.layout.activity_main));
 
