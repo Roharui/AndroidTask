@@ -1,4 +1,4 @@
-package com.task.github_profile;
+package com.task.github_profile.Data;
 
 import org.json.JSONObject;
 

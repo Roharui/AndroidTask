@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.task.github_profile.Data.Item;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ListView extends RecyclerView.Adapter<ListView.ViewHolder> {
         Drawable drawable = ContextCompat.getDrawable(context, item.getImage());
         holder.image.setBackground(drawable);
         holder.title.setText(item.getTitle());
-        holder.title.setText(item.getDescription());
+        holder.descript.setText(!item.getDescription().equals("null") ? item.getDescription() : "");
     }
 
     @Override
